@@ -9,17 +9,27 @@ class ChessDataset(Dataset):
         self.images = [i for i in glob.glob(path + "/*.jpeg")]
         self.labels = [l.split("\\")[-1].replace(".jpeg", "") for l in self.images]
         self.transform = transform
-
+        
     def __len__(self):
         return len(self.images)
     
     def __getitem__(self, idx):
-        img = Image.open(self.images[idx]).convert("RGB")
+
+        if not isinstance(idx, int): # if given a Slice and not just one index
+            arr = []
+            for i in range(idx.start, idx.stop, idx.step if idx.step else 1):
+                img = Image.open(self.images[i]).convert("RGB")
+                if self.transform:
+                    img = self.transform(img)
+                label = self.parse_fen(self.labels[i])
+                arr.append((img, label))
+            return arr
+        
+        img = Image.open(self.images[idx]).convert("RGB")     
 
         if self.transform:
             img = self.transform(img)
 
-        #print (self.labels[idx])
         label = self.parse_fen(self.labels[idx])
 
         return img, label 
