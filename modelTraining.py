@@ -78,8 +78,8 @@ if __name__ == '__main__':
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
 
-    IMAGES_PATH_TRAIN = ".\Images\Train"
-    IMAGES_PATH_TEST = ".\Images\Test"
+    IMAGES_PATH_TRAIN = "./Images/NewTrain"
+    IMAGES_PATH_TEST = "./Images/Test"
 
     # Load my child class of the Pytorch Dataset class
     dataset_train = ChessDataset(IMAGES_PATH_TRAIN, transform=TRANSFORM)
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     )
 
     # Prevent overfitting
-    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=2, verbose=True)
+    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=2)
     # Dropout layer
     dropout = Dropout(p=0.5)
 

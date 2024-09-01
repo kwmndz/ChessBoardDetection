@@ -50,7 +50,7 @@ class ChessDataset(Dataset):
 
 
 if __name__ == "__main__":
-    IMAGES_PATH = ".\Images\Train"
+    IMAGES_PATH = "./Images/NewTrain"
     transform = T.Compose([
         T.Resize((224, 224)),
         T.ToTensor(),
